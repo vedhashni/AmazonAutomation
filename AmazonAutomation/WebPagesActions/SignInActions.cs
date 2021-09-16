@@ -45,6 +45,31 @@ namespace AmazonAutomation.WebPagesActions
             System.Threading.Thread.Sleep(1000);
             sign.signin.Click();
             System.Threading.Thread.Sleep(10000);
+            //Here we call Searchproductsinamazonafterlogin method for searching the product
+            SearchProductsInAmazonAfterLogin(driver);
+        }
+
+        public static void SearchProductsInAmazonAfterLogin(IWebDriver driver)
+        {
+            //Here search bar element is finded
+            IWebElement element = driver.FindElement(By.Id("twotabsearchtextbox"));
+            //By using this search bar is clicked
+            element.SendKeys(Keys.Control + "a");
+            System.Threading.Thread.Sleep(500);
+            //Value is sent to find specific product
+            element.SendKeys("wa");
+            System.Threading.Thread.Sleep(500);
+            //By keys class arrowup used to select the value listed down the search bar
+            element.SendKeys(Keys.ArrowUp);
+            System.Threading.Thread.Sleep(500);
+            //By keys class arrowdown used to select the value listed down the search bar
+            element.SendKeys(Keys.ArrowDown);
+            System.Threading.Thread.Sleep(500);
+            element.SendKeys(Keys.ArrowDown);
+            System.Threading.Thread.Sleep(500);
+            //By using this particular product is searched by clicking the enter key instead search icon
+            element.SendKeys(Keys.Enter);
+            System.Threading.Thread.Sleep(10000);
         }
     }
 }
