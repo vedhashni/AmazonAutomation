@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using NUnit.Framework;
 using AmazonAutomation.WebPages;
+using System;
 
 namespace AmazonAutomation.WebPagesActions
 {
@@ -30,10 +31,13 @@ namespace AmazonAutomation.WebPagesActions
         {
             excel = new ExcelOperation();
             sign = new SignIn(driver);
+            TakeScreenShot(driver);
             sign.login.Click();
             System.Threading.Thread.Sleep(1000);
+            TakeScreenShot(driver);
             //By invoking the readdate method values in table is retrived
             sign.email.SendKeys(excel.ReadData(1, "Email"));
+            TakeScreenShot(driver);
             //is used to wait in a particular page before taking another action
             System.Threading.Thread.Sleep(1000);
             //Here we click continue button for further process
@@ -42,22 +46,27 @@ namespace AmazonAutomation.WebPagesActions
             System.Threading.Thread.Sleep(1000);
             //By invoking the readdate method values in table is retrived
             sign.password.SendKeys(excel.ReadData(1, "Password"));
+            TakeScreenShot(driver);
             System.Threading.Thread.Sleep(1000);
             sign.signin.Click();
+            TakeScreenShot(driver);
             System.Threading.Thread.Sleep(10000);
             //Here we call Searchproductsinamazonafterlogin method for searching the product
             SearchProductsInAmazonAfterLogin(driver);
         }
 
+        //Here we use Searchproductsinamazonafterlogin method for searching the product
         public static void SearchProductsInAmazonAfterLogin(IWebDriver driver)
         {
             //Here search bar element is finded
             IWebElement element = driver.FindElement(By.Id("twotabsearchtextbox"));
             //By using this search bar is clicked
             element.SendKeys(Keys.Control + "a");
+            TakeScreenShot(driver);
             System.Threading.Thread.Sleep(500);
             //Value is sent to find specific product
             element.SendKeys("wa");
+            TakeScreenShot(driver);
             System.Threading.Thread.Sleep(500);
             //By keys class arrowup used to select the value listed down the search bar
             element.SendKeys(Keys.ArrowUp);
@@ -67,9 +76,19 @@ namespace AmazonAutomation.WebPagesActions
             System.Threading.Thread.Sleep(500);
             element.SendKeys(Keys.ArrowDown);
             System.Threading.Thread.Sleep(500);
+            TakeScreenShot(driver);
             //By using this particular product is searched by clicking the enter key instead search icon
             element.SendKeys(Keys.Enter);
+            TakeScreenShot(driver);
             System.Threading.Thread.Sleep(10000);
+        }
+
+        //Used to takescreenshot of the webactions done
+        public static void TakeScreenShot(IWebDriver driver)
+        {
+            ITakesScreenshot screenshot = driver as ITakesScreenshot;
+            Screenshot screenshot1 = screenshot.GetScreenshot();
+            screenshot1.SaveAsFile(@"C:\Users\vedhashni.v\source\repos\AmazonAutomation\AmazonAutomation\TestScreenShots\AmazonTest" + DateTime.Now.ToString("HHmmss") + ".png");
         }
     }
 }
